@@ -17,11 +17,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Repository
 public class MemberNicknameHistoryRepository {
-    final private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-    static final private String TABLE = "MemberNicknameHistory";
+    private static final String TABLE = "MemberNicknameHistory";
 
-    static final RowMapper<MemberNicknameHistory> rowMapper = (ResultSet resultSet, int rowNum) -> MemberNicknameHistory
+    private static final RowMapper<MemberNicknameHistory> ROW_MAPPER = (ResultSet resultSet, int rowNum) -> MemberNicknameHistory
             .builder()
             .id(resultSet.getLong("id"))
             .memberId(resultSet.getLong("memberId"))
@@ -32,7 +32,7 @@ public class MemberNicknameHistoryRepository {
     public List<MemberNicknameHistory> findAllByMemberId(Long memberId) {
         var sql = String.format("SELECT * FROM %s WHERE memberId = :memberId", TABLE);
         var params = new MapSqlParameterSource().addValue("memberId", memberId);
-        return namedParameterJdbcTemplate.query(sql, params, rowMapper);
+        return namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
     }
 
     public MemberNicknameHistory save(MemberNicknameHistory memberNicknameHistory) {

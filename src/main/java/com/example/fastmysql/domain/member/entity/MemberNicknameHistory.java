@@ -8,13 +8,13 @@ import java.util.Objects;
 
 @Getter
 public class MemberNicknameHistory {
-    final private Long id;
+    private final Long id;
 
-    final private Long memberId;
+    private final Long memberId;
 
-    final private String nickname;
+    private final String nickname;
 
-    final private LocalDateTime createdAt;
+    private final LocalDateTime createdAt;
 
     @Builder
 

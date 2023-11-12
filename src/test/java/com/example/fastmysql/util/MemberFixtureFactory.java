@@ -5,12 +5,12 @@ import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 
 public class MemberFixtureFactory {
-    static public Member create() {
+    public static Member create() {
         var param = new EasyRandomParameters();
         return new EasyRandom(param).nextObject(Member.class);
     }
 
-    static public Member create(Long seed) {
+    public static Member create(Long seed) {
         var param = new EasyRandomParameters()
                 .seed(seed);
         return new EasyRandom(param).nextObject(Member.class);

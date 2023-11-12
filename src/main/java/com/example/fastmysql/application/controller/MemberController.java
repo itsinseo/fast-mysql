@@ -1,4 +1,4 @@
-package com.example.fastmysql.controller;
+package com.example.fastmysql.application.controller;
 
 import com.example.fastmysql.domain.member.dto.MemberDto;
 import com.example.fastmysql.domain.member.dto.MemberNicknameHistoryDto;
@@ -14,8 +14,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/members")
 public class MemberController {
-    final private MemberWriteService memberWriteService;
-    final private MemberReadService memberReadService;
+    private final MemberWriteService memberWriteService;
+    private final MemberReadService memberReadService;
 
     @PostMapping
     public MemberDto register(@RequestBody RegisterMemberCommand command) {

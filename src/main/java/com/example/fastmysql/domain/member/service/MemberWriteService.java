@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class MemberWriteService {
-    final private MemberRepository memberRepository;
-    final private MemberNicknameHistoryRepository memberNicknameHistoryRepository;
+    private final MemberRepository memberRepository;
+    private final MemberNicknameHistoryRepository memberNicknameHistoryRepository;
 
     public Member register(RegisterMemberCommand command) {
         /*
