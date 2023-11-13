@@ -19,6 +19,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Repository
 public class MemberRepository {
+
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     private static final String TABLE = "member";
@@ -74,8 +75,7 @@ public class MemberRepository {
         SqlParameterSource params = new BeanPropertySqlParameterSource(member);
         var id = simpleJdbcInsert.executeAndReturnKey(params).longValue();
 
-        return Member
-                .builder()
+        return Member.builder()
                 .id(id)
                 .email(member.getEmail())
                 .nickname(member.getNickname())

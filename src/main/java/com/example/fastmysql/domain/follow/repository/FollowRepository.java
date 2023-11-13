@@ -2,7 +2,6 @@ package com.example.fastmysql.domain.follow.repository;
 
 import com.example.fastmysql.domain.follow.entity.Follow;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -18,8 +17,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @Repository
 public class FollowRepository {
-    private static final String TABLE = "follow";
+
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
+    private static final String TABLE = "follow";
 
     private static final RowMapper<Follow> ROW_MAPPER =
             (ResultSet resultSet, int rowNum) ->
@@ -37,7 +38,7 @@ public class FollowRepository {
     }
 
     public Follow save(Follow follow) {
-        if(follow.getId()==null) {
+        if (follow.getId() == null) {
             return insert(follow);
         }
 
@@ -52,8 +53,7 @@ public class FollowRepository {
         SqlParameterSource params = new BeanPropertySqlParameterSource(follow);
         var id = simpleJdbcInsert.executeAndReturnKey(params).longValue();
 
-        return Follow
-                .builder()
+        return Follow.builder()
                 .id(id)
                 .fromMemberId(follow.getFromMemberId())
                 .toMemberId(follow.getToMemberId())
