@@ -1,6 +1,5 @@
 package com.example.fastmysql.domain.member;
 
-import com.example.fastmysql.util.MemberFixtureFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

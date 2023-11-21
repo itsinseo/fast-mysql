@@ -1,4 +1,4 @@
-package com.example.fastmysql.domain;
+package com.example.fastmysql.util;
 
 import org.springframework.data.domain.Sort;
 

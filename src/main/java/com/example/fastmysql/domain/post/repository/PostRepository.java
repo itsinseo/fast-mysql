@@ -1,6 +1,6 @@
 package com.example.fastmysql.domain.post.repository;
 
-import com.example.fastmysql.domain.PageHelper;
+import com.example.fastmysql.util.PageHelper;
 import com.example.fastmysql.domain.post.dto.DailyPostCount;
 import com.example.fastmysql.domain.post.dto.DailyPostCountRequest;
 import com.example.fastmysql.domain.post.entity.Post;
@@ -88,6 +88,39 @@ public class PostRepository {
                 .addValue("memberId", memberId);
 
         return namedParameterJdbcTemplate.queryForObject(sql, params, Long.class);
+    }
+
+    public List<Post> findAllByMemberIdAndOrderByIdDesc(Long memberId, int size) {
+        var sql = String.format("""
+                SELECT *
+                FROM %s
+                WHERE memberId = :memberId
+                ORDER BY id DESC
+                LIMIT :size
+                """, TABLE);
+
+        var params = new MapSqlParameterSource()
+                .addValue("memberId", memberId)
+                .addValue("size", size);
+
+        return namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
+    }
+
+    public List<Post> findAllByLessThanIdAndMemberIdAndOrderByIdDesc(Long id, Long memberId, int size) {
+        var sql = String.format("""
+                SELECT *
+                FROM %s
+                WHERE memberId = :memberId and id < :id
+                ORDER BY id DESC
+                LIMIT :size
+                """, TABLE);
+
+        var params = new MapSqlParameterSource()
+                .addValue("memberId", memberId)
+                .addValue("id", id)
+                .addValue("size", size);
+
+        return namedParameterJdbcTemplate.query(sql, params, ROW_MAPPER);
     }
 
     public Post save(Post post) {

@@ -4,8 +4,10 @@ import com.example.fastmysql.domain.post.dto.DailyPostCount;
 import com.example.fastmysql.domain.post.dto.DailyPostCountRequest;
 import com.example.fastmysql.domain.post.dto.PostCommand;
 import com.example.fastmysql.domain.post.entity.Post;
+import com.example.fastmysql.domain.post.service.PageCursor;
 import com.example.fastmysql.domain.post.service.PostReadService;
 import com.example.fastmysql.domain.post.service.PostWriteService;
+import com.example.fastmysql.util.CursorRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,5 +40,12 @@ public class PostController {
             @PathVariable Long memberId,
             Pageable pageable) {
         return postReadService.getPosts(memberId, pageable);
+    }
+
+    @GetMapping("/members/{memberId}/by-cursor")
+    public PageCursor<Post> getPosts(
+            @PathVariable Long memberId,
+            CursorRequest cursorRequest) {
+        return postReadService.getPosts(memberId, cursorRequest);
     }
 }
