@@ -2,6 +2,7 @@ package com.example.fastmysql.domain.post;
 
 import com.example.fastmysql.domain.post.entity.Post;
 import com.example.fastmysql.domain.post.repository.PostRepository;
+import com.example.fastmysql.util.PostFixtureFactory;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
