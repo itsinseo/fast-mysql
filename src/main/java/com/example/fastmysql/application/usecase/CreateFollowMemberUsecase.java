@@ -13,7 +13,7 @@ public class CreateFollowMemberUsecase {
 
     public void execute(Long fromMemberId, Long toMemberId) {
         /*
-            1. 입력받은 emmberId로 회원조회
+            1. 입력받은 memberId로 회원조회
             2. FollowWriteService.create()
          */
         var fromMember = memberReadService.getMember(fromMemberId);

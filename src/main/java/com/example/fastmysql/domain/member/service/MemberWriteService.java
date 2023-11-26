@@ -7,6 +7,7 @@ import com.example.fastmysql.domain.member.repository.MemberNicknameHistoryRepos
 import com.example.fastmysql.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Service
@@ -14,6 +15,7 @@ public class MemberWriteService {
     private final MemberRepository memberRepository;
     private final MemberNicknameHistoryRepository memberNicknameHistoryRepository;
 
+    @Transactional
     public Member register(RegisterMemberCommand command) {
         /*
             목표 - 회원정보(이메일, 닉네임, 생년월일)을 등록한다.
@@ -22,16 +24,13 @@ public class MemberWriteService {
             val member = Member.of(memberRegisterCommand)
             memberRepository.save()
          */
-        var member = Member
-                .builder()
+        var member = Member.builder()
                 .nickname(command.nickname())
                 .email(command.email())
                 .birthday(command.birthday())
                 .build();
 
-
-
-        var savedMember =  memberRepository.save(member);
+        var savedMember = memberRepository.save(member);
         saveNicknameHistory(savedMember);
         return savedMember;
 
