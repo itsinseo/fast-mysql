@@ -2,7 +2,9 @@ package com.example.fastmysql.domain.post.service;
 
 import com.example.fastmysql.domain.post.dto.DailyPostCount;
 import com.example.fastmysql.domain.post.dto.DailyPostCountRequest;
+import com.example.fastmysql.domain.post.dto.PostDto;
 import com.example.fastmysql.domain.post.entity.Post;
+import com.example.fastmysql.domain.post.repository.PostLikeRepository;
 import com.example.fastmysql.domain.post.repository.PostRepository;
 import com.example.fastmysql.util.CursorRequest;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +19,16 @@ import java.util.List;
 public class PostReadService {
 
     private final PostRepository postRepository;
+    private final PostLikeRepository postLikeRepository;
+
+    public PostDto toDto(Post post) {
+        return new PostDto(
+                post.getId(),
+                post.getContents(),
+                post.getCreatedAt(),
+                postLikeRepository.getCount(post.getId())
+        );
+    }
 
     public List<DailyPostCount> getDailyPostCount(DailyPostCountRequest request) {
         /*
@@ -29,8 +41,12 @@ public class PostReadService {
         return postRepository.groupByCreatedDate(request);
     }
 
-    public Page<Post> getPosts(Long memberId, Pageable pageable) {
-        return postRepository.findAllByMemberId(memberId, pageable);
+    public Post getPost(Long postId) {
+        return postRepository.findById(postId, false).orElseThrow();
+    }
+
+    public Page<PostDto> getPosts(Long memberId, Pageable pageable) {
+        return postRepository.findAllByMemberId(memberId, pageable).map(this::toDto);
     }
 
     public PageCursor<Post> getPosts(Long memberId, CursorRequest cursorRequest) {
